@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Digital Architecture | Future Tech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === CONFIGURACIÓN FUTURISTA === */
+        :root {
+            /* Paleta Original Adaptada a Neón */
+            --neon-blue: #0077CC;      /* Tu azul acento, más brillante */
+            --neon-green: #00FF9D;     /* Tu verde, llevado a neón */
+            --deep-bg: #030305;        /* Negro casi vacío */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #E0E0E0;
+            --text-dim: #888888;
+            
+            /* Efectos */
+            --glow-blue: 0 0 20px rgba(0, 119, 204, 0.6);
+            --glow-green: 0 0 20px rgba(0, 255, 157, 0.4);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; cursor: none; /* Cursor personalizado */ }
+
+        body {
+            background-color: var(--deep-bg);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            font-size: 18px;
+        }
+
+        /* === CURSOR PERSONALIZADO === */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+        }
+        .cursor-dot { width: 8px; height: 8px; background: var(--neon-green); }
+        .cursor-outline { 
+            width: 40px; height: 40px; 
+            border: 1px solid var(--neon-blue);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* Grid Cyberpunk de Fondo */
+        .cyber-grid {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 119, 204, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 500px;
+            transform-style: preserve-3d;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
+
+        /* === TIPOGRAFÍA & UTILIDADES === */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .neon-text-blue { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,119,204,0.5); }
+        .neon-text-green { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,157,0.5); }
+        
+        .section { padding: 120px 5%; position: relative; max-width: 1600px; margin: 0 auto; }
+
+        /* === NAVBAR HUD === */
+        .hud-nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(3, 3, 5, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .brand-glitch {
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700; color: white; text-decoration: none;
+            position: relative;
+        }
+        
+        .brand-glitch::before {
+            content: attr(data-text); position: absolute; left: -2px; text-shadow: 1px 0 red; 
+            top: 0; color: white; overflow: hidden; clip: rect(0, 900px, 0, 0); 
+            animation: noise-anim 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes noise-anim {
+            0% { clip: rect(20px, 9999px, 16px, 0); }
+            5% { clip: rect(72px, 9999px, 86px, 0); }
+            100% { clip: rect(10px, 9999px, 90px, 0); }
+        }
+
+        .nav-items { display: flex; gap: 40px; }
+        .nav-link {
+            color: var(--text-dim); text-decoration: none; font-size: 14px; 
+            letter-spacing: 2px; transition: var(--transition); position: relative;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+            background: var(--neon-green); transition: var(--transition); box-shadow: var(--glow-green);
+        }
+        .nav-link:hover { color: white; }
+        .nav-link:hover::after { width: 100%; }
+
+        /* === HERO SECTION === */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+
+        /* Partículas flotantes */
+        .particles span {
+            position: absolute; width: 4px; height: 4px; background: var(--neon-blue);
+            border-radius: 50%; box-shadow: var(--glow-blue);
+            animation: floatUp linear infinite; opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        .hero-content { z-index: 2; text-align: center; }
+        
+        .hero-title {
+            font-size: 5vw; line-height: 1; margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--neon-blue), var(--neon-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: glowText 3s infinite alternate;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem; color: var(--text-dim); max-width: 600px; margin: 0 auto 40px;
+            border: 1px solid var(--neon-blue); padding: 20px; border-radius: 0 20px 0 20px;
+            background: rgba(0, 119, 204, 0.05);
+        }
+
+        /* === ESTADÍSTICAS HOLOGRÁFICAS === */
+        .holo-stats {
+            display: flex; gap: 60px; justify-content: center; margin-top: 60px;
+        }
+        .holo-card {
+            text-align: left; padding-left: 15px; border-left: 2px solid var(--neon-green);
+            background: linear-gradient(90deg, rgba(0,255,157,0.1), transparent);
+        }
+        .stat-num { font-size: 3rem; font-family: 'Orbitron'; color: white; display: block; }
+        .stat-label { font-size: 0.9rem; color: var(--neon-green); letter-spacing: 2px; }
+
+        /* === SERVICIOS 3D === */
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        }
+
+        .service-box {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 40px; position: relative; overflow: hidden;
+            transition: var(--transition); transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 40px rgba(0, 119, 204, 0.1);
+        }
+
+        .service-icon {
+            font-size: 40px; color: var(--neon-blue); margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .service-box:hover .service-icon {
+            transform: scale(1.2) translateZ(20px); text-shadow: var(--glow-blue);
+        }
+
+        .service-list { list-style: none; margin-top: 20px; }
+        .service-list li {
+            margin-bottom: 10px; font-size: 0.9rem; color: var(--text-dim);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .service-list li i { color: var(--neon-green); font-size: 0.7rem; }
+
+        /* === TECH MARQUEE (INFINITE SCROLL) === */
+        .tech-section { overflow: hidden; padding: 60px 0; background: rgba(255,255,255,0.02); }
+        .marquee-track {
+            display: flex; gap: 80px; width: max-content;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .tech-item {
+            font-family: 'Orbitron'; font-size: 24px; color: var(--text-dim);
+            display: flex; align-items: center; gap: 15px; opacity: 0.5; transition: 0.3s;
+        }
+        .tech-item:hover { opacity: 1; color: var(--neon-green); text-shadow: var(--glow-green); }
+
+        /* === PROYECTOS (GALERÍA GLITCH) === */
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+        }
+
+        .project-card {
+            position: relative; height: 350px; overflow: hidden;
+            border-radius: 4px; border: 1px solid var(--glass-border);
+        }
+
+        .project-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s; filter: grayscale(100%) contrast(1.2);
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.1); filter: grayscale(0%);
+        }
+
+        .project-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 30px; background: linear-gradient(to top, black, transparent);
+            transform: translateY(100px); transition: 0.4s;
+        }
+
+        .project-card:hover .project-overlay { transform: translateY(0); }
+
+        .project-tag {
+            background: var(--neon-blue); color: black; padding: 2px 8px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+        }
+
+        /* === CTA FUTURISTA === */
+        .cta-section {
+            text-align: center; background: radial-gradient(circle at center, rgba(0,119,204,0.1), transparent);
+        }
+        
+        .cyber-button {
+            display: inline-block; padding: 15px 40px;
+            background: transparent; border: 2px solid var(--neon-green);
+            color: var(--neon-green); font-family: 'Orbitron'; font-weight: 700;
+            text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
+            position: relative; overflow: hidden; transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+        }
+
+        .cyber-button:hover {
+            background: var(--neon-green); color: black; box-shadow: var(--glow-green);
+        }
+
+        /* === FOOTER MATRIX === */
+        .matrix-footer {
+            border-top: 1px solid var(--glass-border); padding: 80px 5% 40px;
+            position: relative;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px;
+        }
+        .footer-col h4 { color: white; margin-bottom: 25px; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 15px; }
+        .footer-col a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--neon-blue); padding-left: 10px; }
+
+        .private-badge {
+            border: 1px solid var(--neon-blue); padding: 15px;
+            background: rgba(0, 119, 204, 0.05); margin-top: 20px;
+            display: flex; align-items: center; gap: 15px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .hero-title { font-size: 40px; }
+            .holo-stats { flex-direction: column; gap: 30px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-items { display: none; } /* Simplificación móvil */
+        }
+
+        /* Animación de entrada al scroll */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <div class="cyber-grid"></div>
+
+    <nav class="hud-nav">
+        <a href="#" class="brand-glitch" data-text="BACKEND DIGITAL ARCHITECTURE">
+            BACKEND DIGITAL <span style="color: var(--neon-green);">ARCHITECTURE</span>
+        </a>
+        <div class="nav-items">
+            <a href="#servicios" class="nav-link">SERVICIOS</a>
+            <a href="#proyectos" class="nav-link">CASOS</a>
+            <a href="#stack" class="nav-link">TECNOLOGÍA</a>
+            <a href="iniciarprotocolo.html" class="cyber-button" style="font-size: 12px; padding: 8px 20px;">INICIAR</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="particles" id="particles"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">DESARROLLO DE SOFTWARE<br>QUE IMPACTA</h1>
+            <p class="hero-subtitle">
+                &lt;code&gt; Creamos soluciones digitales que transforman negocios y definen industrias. Especialistas en tecnología moderna. &lt;/code&gt;
+            </p>
+            
+            <div class="holo-stats">
+                <div class="holo-card">
+                    <span class="stat-num" data-target="1521">0</span>
+                    <span class="stat-label">PROYECTOS ÉLITE</span>
+                </div>
+                <div class="holo-card">
+                    <span class="stat-num" data-target="687">0</span>
+                    <span class="stat-label">CLIENTES EXCLUSIVOS</span>
+                </div>
+                <div class="holo-card">
+                    <span class="stat-num" data-target="100">0%</span>
+                    <span class="stat-label">TASA DE ÉXITO</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="tech-section" id="stack">
+        <div class="marquee-track">
+            <div class="tech-item"><i class="fab fa-java"></i> JAVA</div>
+            <div class="tech-item"><i class="fab fa-python"></i> PYTHON</div>
+            <div class="tech-item"><i class="fab fa-react"></i> REACT</div>
+            <div class="tech-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="tech-item"><i class="fab fa-docker"></i> DOCKER</div>
+            <div class="tech-item"><i class="fab fa-node-js"></i> NODE.JS</div>
+            <div class="tech-item"><i class="fab fa-java"></i> JAVA</div>
+            <div class="tech-item"><i class="fab fa-python"></i> PYTHON</div>
+            <div class="tech-item"><i class="fab fa-react"></i> REACT</div>
+            <div class="tech-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="tech-item"><i class="fab fa-docker"></i> DOCKER</div>
+            <div class="tech-item"><i class="fab fa-node-js"></i> NODE.JS</div>
+        </div>
+    </div>
+
+    <section class="section" id="servicios">
+        <div class="reveal">
+            <h2 class="neon-text-blue" style="margin-bottom: 60px; font-size: 2.5rem;">CAPACIDADES TÉCNICAS</h2>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-box reveal">
+                <i class="fas fa-code service-icon"></i>
+                <h3>DESARROLLO WEB A MEDIDA</h3>
+                <ul class="service-list">
+                    <li><i class="fas fa-check"></i> Plataformas Escalables</li>
+                    <li><i class="fas fa-check"></i> Web Apps Progresivas (PWA)</li>
+                    <li><i class="fas fa-check"></i> Arquitectura Limpia</li>
+                </ul>
+            </div>
+            
+            <div class="service-box reveal" style="border-color: rgba(0,255,157,0.2);">
+                <i class="fas fa-mobile-alt service-icon" style="color: var(--neon-green);"></i>
+                <h3>DISEÑO UI/UX & MOVIL</h3>
+                <ul class="service-list">
+                    <li><i class="fas fa-check"></i> Interfaces Futuristas</li>
+                    <li><i class="fas fa-check"></i> Apps Nativas iOS/Android</li>
+                    <li><i class="fas fa-check"></i> Experiencia Fluida</li>
+                </ul>
+            </div>
+            
+            <div class="service-box reveal">
+                <i class="fas fa-server service-icon"></i>
+                <h3>BACKEND & CLOUD</h3>
+                <ul class="service-list">
+                    <li><i class="fas fa-check"></i> APIs REST & GraphQL</li>
+                    <li><i class="fas fa-check"></i> Microservicios</li>
+                    <li><i class="fas fa-check"></i> Seguridad Ciberpunk</li>
+                </ul>
+            </div>
+
+            <div class="service-box reveal">
+                <i class="fas fa-rocket service-icon" style="color: var(--neon-green);"></i>
+                <h3>OPTIMIZACIÓN</h3>
+                <ul class="service-list">
+                    <li><i class="fas fa-check"></i> Rendimiento Extremo</li>
+                    <li><i class="fas fa-check"></i> SEO Técnico</li>
+                    <li><i class="fas fa-check"></i> Carga Instantánea</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="proyectos">
+        <h2 class="neon-text-green" style="margin-bottom: 60px; text-align: right; font-size: 2.5rem;">CASOS DE ESTUDIO</h2>
+        
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cyber Security" class="project-img">
+                <div class="project-overlay">
+                    <span class="project-tag">FINTECH</span>
+                    <h3>BANCA MÓVIL SEGURA</h3>
+                    <p style="font-size: 14px; color: #ccc;">Encriptación de extremo a extremo e IA financiera.</p>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hardware" class="project-img">
+                <div class="project-overlay">
+                    <span class="project-tag">IOT & HARDWARE</span>
+                    <h3>SISTEMA DE GESTIÓN LOGÍSTICA</h3>
+                    <p style="font-size: 14px; color: #ccc;">Tracking en tiempo real con optimización de rutas.</p>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <img src="https://images.unsplash.com/photo-1558655146-d09347e0b7a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ecommerce" class="project-img">
+                <div class="project-overlay">
+                    <span class="project-tag">ECOMMERCE</span>
+                    <h3>PLATAFORMA GLOBAL</h3>
+                    <p style="font-size: 14px; color: #ccc;">Headless CMS y pasarelas de pago múltiples.</p>
+                </div>
+            </div>
+             <div class="project-card reveal">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Health" class="project-img">
+                <div class="project-overlay">
+                    <span class="project-tag">HEALTHTECH</span>
+                    <h3>SALUD DIGITAL</h3>
+                    <p style="font-size: 14px; color: #ccc;">Telemedicina y expedientes clínicos en blockchain.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta-section reveal" id="contacto">
+        <h2 style="font-size: 3rem; margin-bottom: 20px;">¿LISTO PARA EL FUTURO?</h2>
+        <p style="max-width: 600px; margin: 0 auto 40px; color: var(--text-dim);">
+            Transformamos tu visión en código de alto rendimiento. Hablemos de tu próximo gran proyecto.
+        </p>
+        <a href="iniciarprotocolo.html" class="cyber-button">INICIAR PROTOCOLO</a>
+    </section>
+
+    <footer class="matrix-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="brand-glitch" style="font-size: 1.5rem; margin-bottom: 20px;">BACKEND DIGITAL</div>
+                <p style="color: var(--text-dim); max-width: 300px;">
+                    Arquitectura de software avanzada para la era digital. Innovación sin compromisos.
+                </p>
+                
+                <div class="private-badge">
+                    <i class="fas fa-lock" style="color: var(--neon-blue);"></i>
+                    <div>
+                        <strong style="color: white; display: block;">ENTIDAD PRIVADA</strong>
+                        <span style="font-size: 12px; color: var(--text-dim);">Acceso Exclusivo / NDA Requerido</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>DIRECTORIO</h4>
+                <ul>
+                    <li><a href="#">// Servicios</a></li>
+                    <li><a href="#">// Stack Tecnológico</a></li>
+                    <li><a href="#">// Casos de Éxito</a></li>
+                    <li><a href="#">// Contacto Encriptado</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>REDES</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-github"></i> Github</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> X / Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="margin-top: 60px; padding-top: 20px; border-top: 1px dashed var(--glass-border); display: flex; justify-content: space-between; font-size: 12px; color: #555;">
+            <span>© 2023 BACKEND DIGITAL ARCHITECTURE × LIFE TIMES AGENCY</span>
+            <span>SYSTEM STATUS: STABLE</span>
+        </div>
+    </footer>
+
+    <script>
+        // === CUSTOM CURSOR ===
+        const cursorDot = document.querySelector("[data-cursor-dot]");
+        const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Animación suave para el círculo grande
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover effect for links to expand cursor
+        document.querySelectorAll('a, button, .service-box').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorOutline.style.backgroundColor = 'rgba(0, 255, 157, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // === GENERAR PARTÍCULAS ===
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const span = document.createElement('span');
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDuration = (Math.random() * 5 + 3) + 's';
+            span.style.animationDelay = (Math.random() * 5) + 's';
+            particlesContainer.appendChild(span);
+        }
+
+        // === SCROLL ANIMATIONS (REVEAL) ===
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        reveal(); // Trigger once on load
+
+        // === CONTADOR ANIMADO ===
+        const counters = document.querySelectorAll('.stat-num');
+        const speed = 200;
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace('%', ''); // Limpiar % si existe
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc) + (counter.getAttribute('data-target').includes('%') ? '%' : '');
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.innerText = target + (counter.getAttribute('data-target').includes('%') ? '%' : '');
+                }
+            };
+            updateCount();
+        });
+    </script>
+</body>
+</html>
