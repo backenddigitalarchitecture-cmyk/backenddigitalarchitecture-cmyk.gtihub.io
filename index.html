@@ -203,36 +203,96 @@
         }
         .tech-item:hover { opacity: 1; color: var(--neon-green); text-shadow: var(--glow-green); }
 
-        /* === PROYECTOS (GALERÍA GLITCH) === */
-        .projects-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+        /* === NUEVA SECCIÓN: RAZONES Y POR QUÉ NOSOTROS === */
+        .reasons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .project-card {
-            position: relative; height: 350px; overflow: hidden;
-            border-radius: 4px; border: 1px solid var(--glass-border);
+        .reason-col h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: white;
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 10px;
+            display: inline-block;
         }
 
-        .project-img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s; filter: grayscale(100%) contrast(1.2);
+        .reason-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 8px;
+            transition: var(--transition);
         }
 
-        .project-card:hover .project-img {
-            transform: scale(1.1); filter: grayscale(0%);
+        .reason-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(10px);
         }
 
-        .project-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 30px; background: linear-gradient(to top, black, transparent);
-            transform: translateY(100px); transition: 0.4s;
+        .reason-icon {
+            font-size: 24px;
+            color: var(--neon-blue);
+            background: rgba(0, 119, 204, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
         }
 
-        .project-card:hover .project-overlay { transform: translateY(0); }
+        /* TARJETA DESTACADA: POR QUÉ NOSOTROS */
+        .why-us-card {
+            background: rgba(3, 3, 5, 0.9);
+            border: 1px solid var(--neon-green);
+            padding: 40px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: var(--glow-green);
+        }
 
-        .project-tag {
-            background: var(--neon-blue); color: black; padding: 2px 8px;
-            font-size: 10px; font-weight: 700; text-transform: uppercase;
+        .why-us-card::before {
+            content: "SISTEMA RECOMENDADO";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--deep-bg);
+            color: var(--neon-green);
+            padding: 0 15px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            border: 1px solid var(--neon-green);
+        }
+
+        .highlight-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .highlight-list i {
+            color: var(--neon-green);
+            font-size: 1.2rem;
+        }
+
+        .price-highlight {
+            font-size: 2.5rem;
+            font-family: 'Orbitron';
+            color: var(--neon-green);
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
+            margin: 10px 0;
+            display: block;
         }
 
         /* === CTA FUTURISTA === */
@@ -277,7 +337,7 @@
         @media (max-width: 900px) {
             .hero-title { font-size: 40px; }
             .holo-stats { flex-direction: column; gap: 30px; }
-            .projects-grid { grid-template-columns: 1fr; }
+            .reasons-container { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; }
             .nav-items { display: none; } /* Simplificación móvil */
         }
@@ -301,7 +361,7 @@
         </a>
         <div class="nav-items">
             <a href="#servicios" class="nav-link">SERVICIOS</a>
-            <a href="#proyectos" class="nav-link">CASOS</a>
+            <a href="#nosotros" class="nav-link">NOSOTROS</a>
             <a href="#stack" class="nav-link">TECNOLOGÍA</a>
             <a href="iniciarprotocolo.html" class="cyber-button" style="font-size: 12px; padding: 8px 20px;">INICIAR</a>
         </div>
@@ -398,44 +458,74 @@
         </div>
     </section>
 
-    <section class="section" id="proyectos">
-        <h2 class="neon-text-green" style="margin-bottom: 60px; text-align: right; font-size: 2.5rem;">CASOS DE ESTUDIO</h2>
-        
-        <div class="projects-grid">
-            <div class="project-card reveal">
-                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cyber Security" class="project-img">
-                <div class="project-overlay">
-                    <span class="project-tag">FINTECH</span>
-                    <h3>BANCA MÓVIL SEGURA</h3>
-                    <p style="font-size: 14px; color: #ccc;">Encriptación de extremo a extremo e IA financiera.</p>
+    <section class="section" id="nosotros">
+        <div class="reasons-container">
+            
+            <div class="reason-col reveal">
+                <h3>IMPERATIVO DIGITAL</h3>
+                <p style="color: var(--text-dim); margin-bottom: 30px;">
+                    En la era actual, no existir en digital es no existir en el mercado. Elevamos tu marca al siguiente nivel.
+                </p>
+
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <h4 style="color:white; margin-bottom: 5px;">ALCANCE GLOBAL</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">Tu negocio abierto 24/7 en cualquier parte del mundo.</p>
+                    </div>
+                </div>
+
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fas fa-bezier-curve"></i></div>
+                    <div>
+                        <h4 style="color:white; margin-bottom: 5px;">DISEÑOS PROFESIONALES</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">Interfaces visuales de vanguardia y estética personalizada que proyectan la máxima calidad y profesionalismo de tu marca.</p>
+                    </div>
+                </div>
+
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fas fa-server"></i></div>
+                    <div>
+                        <h4 style="color:white; margin-bottom: 5px;">SERVIDORES PRIVADOS</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">Infraestructura propia de alto rendimiento, monitoreada 24/7 para garantizar la seguridad y estabilidad total de tu negocio.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="project-card reveal">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hardware" class="project-img">
-                <div class="project-overlay">
-                    <span class="project-tag">IOT & HARDWARE</span>
-                    <h3>SISTEMA DE GESTIÓN LOGÍSTICA</h3>
-                    <p style="font-size: 14px; color: #ccc;">Tracking en tiempo real con optimización de rutas.</p>
+            <div class="reason-col reveal">
+                <div class="why-us-card">
+                    <h3 style="border-bottom: none; color: var(--neon-green);">MEMBRESIA BUSINESS</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 30px;">
+                        Rompemos el modelo tradicional de agencias costosas. Ofrecemos ingeniería de élite accesible.
+                    </p>
+
+                    <ul class="highlight-list" style="list-style: none;">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>PRECIO DISRUPTIVO</strong>
+                                <span class="price-highlight">$250 MXN <small style="font-size: 1rem; color:white;">/semana</small></span>
+                                <span style="font-size: 0.9rem; color: var(--text-dim);">Sin costos ocultos. Membresía transparente.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-headset"></i>
+                            <div>
+                                <strong>SOPORTE 24/7 EN TIEMPO REAL</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 5px;">Nuestros asesores y programadores están siempre en línea para ti.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <strong>CALIDAD DE CÓDIGO ÉLITE</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 5px;">Sitios ultrarrápidos, seguros y con diseño futurista.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="project-card reveal">
-                <img src="https://images.unsplash.com/photo-1558655146-d09347e0b7a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ecommerce" class="project-img">
-                <div class="project-overlay">
-                    <span class="project-tag">ECOMMERCE</span>
-                    <h3>PLATAFORMA GLOBAL</h3>
-                    <p style="font-size: 14px; color: #ccc;">Headless CMS y pasarelas de pago múltiples.</p>
-                </div>
-            </div>
-             <div class="project-card reveal">
-                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Health" class="project-img">
-                <div class="project-overlay">
-                    <span class="project-tag">HEALTHTECH</span>
-                    <h3>SALUD DIGITAL</h3>
-                    <p style="font-size: 14px; color: #ccc;">Telemedicina y expedientes clínicos en blockchain.</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -467,10 +557,10 @@
             <div class="footer-col">
                 <h4>DIRECTORIO</h4>
                 <ul>
-                    <li><a href="#">// Servicios</a></li>
-                    <li><a href="#">// Stack Tecnológico</a></li>
-                    <li><a href="#">// Casos de Éxito</a></li>
-                    <li><a href="#">// Contacto Encriptado</a></li>
+                    <li><a href="#servicios">// Servicios</a></li>
+                    <li><a href="#nosotros">// Por qué Nosotros</a></li>
+                    <li><a href="#stack">// Stack Tecnológico</a></li>
+                    <li><a href="iniciarprotocolo.html">// Iniciar Protocolo</a></li>
                 </ul>
             </div>
 
@@ -510,7 +600,7 @@
         });
 
         // Hover effect for links to expand cursor
-        document.querySelectorAll('a, button, .service-box').forEach(el => {
+        document.querySelectorAll('a, button, .service-box, .reason-item').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
                 cursorOutline.style.backgroundColor = 'rgba(0, 255, 157, 0.1)';
